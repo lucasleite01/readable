@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, ListGroup } from 'reactstrap';
+import { ListGroup } from 'reactstrap';
 // import * as PostsAPI from '../api-server/PostsAPI';
 import PostContent from './PostContent.js';
 import { connect } from 'react-redux';
@@ -29,40 +29,41 @@ class PostList extends Component {
   // 5) Mecanismo de voto para votar post com positivo ou negativo DONE
   // 6) Mecanismo para ordená-las por data ou pontuação (não obrigatório ter ambos) DONE
   //
-  // Os recursos de contador de comentários, edit/delete, e upvote/downvote são necessários nesta página para permitir que o usuário gerencie os posts sem navegar para outras páginas. OK
+  // Os recursos de contador de comentários, edit/delete, e upvote/downvote são necessários nesta página para permitir que o usuário gerencie os posts sem navegar para outras páginas. DONE
   //
   // O mecanismo de votos funciona e exibe corretamente a nova pontuação dos votos após um clique. DONE
   //
   // As postagens em lista possuem um link que levam à página de detalhes daquela postagem.
   //
-  // Todas as postagens estão listadas na raíz (/). OK
+  // Todas as postagens estão listadas na raíz (/). DONE
   //
-  // Todas as postagens de uma categoria estão listadas em /:category OK
+  // Todas as postagens de uma categoria estão listadas em /:category DONE
   //
-  // As páginas de lista das postagens (raíz / e categoria /:category) incluem um mecanismo para ordená-las por data ou pontuação (não obrigatório ter ambos), e essa ordenação funciona corretamente. OK
+  // As páginas de lista das postagens (raíz / e categoria /:category) incluem um mecanismo para ordená-las por data ou pontuação (não obrigatório ter ambos), e essa ordenação funciona corretamente. DONE
   //
-  // As páginas de lista de postagens incluem um botão para adicionar um novo post.
+  // As páginas de lista de postagens incluem um botão para adicionar um novo post. DONE
   //
   // Todas as categorias disponíveis são visíveis em qualquer página de lista de postagens.
   render() {
     // const { postList } = this.props;
     const { postList } = this.props;
-    console.log('Props', this.props);
+    // console.log('Props', this.props);
     // console.log("match", this.props.match.params);
     return (
-      <Row>
-      <ListGroup>
-      {
-        postList.map(post => (
-          <PostContent
-          key={post.id}
-          post={post}
-          showBody={true}>
-          </PostContent>
-        ))
-      }
-      </ListGroup>
-      </Row>
+      <div>
+        <h3>Posts</h3>
+          <ListGroup>
+          {
+            postList.map(post => (
+              <PostContent
+              key={post.id}
+              post={post}
+              showBody={true}>
+              </PostContent>
+            ))
+          }
+          </ListGroup>
+      </div>
     );
   }
 }

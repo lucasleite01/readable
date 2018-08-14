@@ -181,7 +181,6 @@ app.post('/posts', bodyParser.json(), (req, res) => {
 })
 
 app.get('/posts/:id', (req, res) => {
-  console.log("get post detail", req.params.id);
     posts.get(req.token, req.params.id)
       .then(
           (data) => res.send(data),

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import { Container, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import { DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
-import PostList from './components/PostList.js'
+import PostList from './components/PostList.js';
+import AddPost from './components/AddPost.js';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 // import { connect } from 'react-redux';
 
@@ -25,7 +26,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <Router>
         <Container>
@@ -35,10 +36,10 @@ class App extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink href="/">Components</NavLink>
+                  <NavLink><Link to="/">Posts</Link></NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="/">GitHub</NavLink>
+                  <NavLink><Link to="/post/new">Add Post</Link></NavLink>
                 </NavItem>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
@@ -63,15 +64,15 @@ class App extends Component {
               </Nav>
             </Collapse>
           </Navbar>
-          <h3>Posts</h3>
           <Route exact path="/" render= {() => (
             <PostList orderBy={this.state.orderBy}>
             </PostList>
           )} />
-          <Route path="/:category" render= {() => (
+          <Route exact path="/:category" render= {() => (
             <PostList orderBy={this.state.orderBy}>
             </PostList>
           )} />
+          <Route exact path="/post/new" component={AddPost} />
         </Container>
       </Router>
     );

@@ -7,11 +7,11 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const VOTE_UP = 'VOTE_UP';
 export const VOTE_DOWN = 'VOTE_DOWN';
 
-// export function addPost(post) {
-//   return {
-//     type: ADD_POST, ...post
-//   }
-// }
+export function addPost(post) {
+  return {
+    type: ADD_POST, ...post
+  }
+}
 
 export function editPost(post) {
   return {

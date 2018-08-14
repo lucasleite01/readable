@@ -90,7 +90,6 @@ class PostContent extends Component {
     }
 
     PostsAPI.editPost(newPost).then((data) => {
-      console.log("data", data);
       this.props.editPost(data);
     });
 

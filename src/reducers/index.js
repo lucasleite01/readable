@@ -2,7 +2,8 @@ import {
   VOTE_UP,
   VOTE_DOWN,
   DELETE_POST,
-  EDIT_POST
+  EDIT_POST,
+  ADD_POST
 } from '../actions';
 
 const defaultData = {
@@ -64,6 +65,21 @@ function post(state = defaultData, action) {
           ...state[action.id],
           title: action.title,
           body: action.body
+        }
+      };
+    case ADD_POST:
+      return {
+        ...state,
+        [action.id]: {
+          id: action.id,
+          timestamp: action.timestamp,
+          title: action.title,
+          body: action.body,
+          author: action.author,
+          category: action.category,
+          voteScore: action.voteScore,
+          deleted: action.deleted,
+          commentCount: action.commentCount
         }
       };
     default:
