@@ -3,6 +3,7 @@ import { Row, ListGroup } from 'reactstrap';
 // import * as PostsAPI from '../api-server/PostsAPI';
 import PostContent from './PostContent.js';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 class PostList extends Component {
 
@@ -28,17 +29,17 @@ class PostList extends Component {
   // 5) Mecanismo de voto para votar post com positivo ou negativo DONE
   // 6) Mecanismo para ordená-las por data ou pontuação (não obrigatório ter ambos) DONE
   //
-  // Os recursos de contador de comentários, edit/delete, e upvote/downvote são necessários nesta página para permitir que o usuário gerencie os posts sem navegar para outras páginas.
+  // Os recursos de contador de comentários, edit/delete, e upvote/downvote são necessários nesta página para permitir que o usuário gerencie os posts sem navegar para outras páginas. OK
   //
   // O mecanismo de votos funciona e exibe corretamente a nova pontuação dos votos após um clique. DONE
   //
   // As postagens em lista possuem um link que levam à página de detalhes daquela postagem.
   //
-  // Todas as postagens estão listadas na raíz (/).
+  // Todas as postagens estão listadas na raíz (/). OK
   //
-  // Todas as postagens de uma categoria estão listadas em /:category
+  // Todas as postagens de uma categoria estão listadas em /:category OK
   //
-  // As páginas de lista das postagens (raíz / e categoria /:category) incluem um mecanismo para ordená-las por data ou pontuação (não obrigatório ter ambos), e essa ordenação funciona corretamente.
+  // As páginas de lista das postagens (raíz / e categoria /:category) incluem um mecanismo para ordená-las por data ou pontuação (não obrigatório ter ambos), e essa ordenação funciona corretamente. OK
   //
   // As páginas de lista de postagens incluem um botão para adicionar um novo post.
   //
@@ -46,7 +47,8 @@ class PostList extends Component {
   render() {
     // const { postList } = this.props;
     const { postList } = this.props;
-    // console.log('Props', this.props);
+    console.log('Props', this.props);
+    // console.log("match", this.props.match.params);
     return (
       <Row>
       <ListGroup>
@@ -66,7 +68,7 @@ class PostList extends Component {
 }
 
 function mapStateToProps(state, props) {
-  const { orderBy } = props;
+  const { orderBy, match } = props;
   let newState = [];
 
   // console.log(state);
@@ -77,6 +79,11 @@ function mapStateToProps(state, props) {
 
     /*REMOVING DELETED POSTS FROM VIEW*/
     newState = newState.filter((post) => post.deleted !== true);
+
+    /*FILTER BY CATEGORY*/
+    if (match.params.category !== null && match.params.category !== undefined) {
+      newState = newState.filter((post) => post.category === match.params.category);
+    }
 
     /*ORDERING POSTS*/
     if (orderBy === 'vote') { //order posts by score
@@ -93,6 +100,6 @@ function mapStateToProps(state, props) {
   }
 }
 
-export default connect(mapStateToProps)(PostList);
+export default withRouter(connect(mapStateToProps)(PostList));
 
 //export default PostList;

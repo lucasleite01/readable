@@ -3,6 +3,7 @@ import './App.css';
 import { Container, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import { DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
 import PostList from './components/PostList.js'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 // import { connect } from 'react-redux';
 
 class App extends Component {
@@ -24,49 +25,65 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
-      <Container>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">Readable</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/">Components</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/">GitHub</NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Order by
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem onClick={() => this.setState({orderBy: 'comment'})}>
-                    Comment
-                  </DropdownItem>
-                  <DropdownItem onClick={() => this.setState({orderBy: 'date'})}>
-                    Date
-                  </DropdownItem>
-                  <DropdownItem onClick={() => this.setState({orderBy: 'vote'})}>
-                    Vote
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem onClick={() => this.setState({orderBy: 'default'})}>
-                    Reset
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </Nav>
-          </Collapse>
-        </Navbar>
-        <h3>Posts</h3>
-        <PostList orderBy={this.state.orderBy}>
-        </PostList>
-      </Container>
+      <Router>
+        <Container>
+          <Navbar color="light" light expand="md">
+            <NavbarBrand href="/">Readable</NavbarBrand>
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <NavLink href="/">Components</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/">GitHub</NavLink>
+                </NavItem>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Order by
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem onClick={() => this.setState({orderBy: 'comment'})}>
+                      Comment
+                    </DropdownItem>
+                    <DropdownItem onClick={() => this.setState({orderBy: 'date'})}>
+                      Date
+                    </DropdownItem>
+                    <DropdownItem onClick={() => this.setState({orderBy: 'vote'})}>
+                      Vote
+                    </DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem onClick={() => this.setState({orderBy: 'default'})}>
+                      Reset
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </Nav>
+            </Collapse>
+          </Navbar>
+          <h3>Posts</h3>
+          <Route exact path="/" render= {() => (
+            <PostList orderBy={this.state.orderBy}>
+            </PostList>
+          )} />
+          <Route path="/:category" render= {() => (
+            <PostList orderBy={this.state.orderBy}>
+            </PostList>
+          )} />
+        </Container>
+      </Router>
     );
   }
 }
+
+// const Category = ({ match }) => (
+//   <PostList
+//     orderBy={this.state.orderBy}
+//     path={match.params.id}>
+//   </PostList>
+// );
 
 export default App;
 //export default connect()(App);
