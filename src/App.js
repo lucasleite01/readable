@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Container, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Container, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
 import { DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
 import PostList from './components/PostList.js';
 import AddPost from './components/AddPost.js';
@@ -36,10 +36,10 @@ class App extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink><Link to="/">Posts</Link></NavLink>
+                  <Link className="nav-link" to="/">Posts</Link>
                 </NavItem>
                 <NavItem>
-                  <NavLink><Link to="/post/new">Add Post</Link></NavLink>
+                  <Link className="nav-link" to="/post/new">Add Post</Link>
                 </NavItem>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>

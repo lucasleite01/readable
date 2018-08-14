@@ -76,7 +76,7 @@ class AddPost extends Component {
       author: formAuthor,
       category: formCategory
     }
-    console.log("newPost", newPost);
+    
     PostsAPI.addPost(newPost).then((data) => {
       this.props.addPost(data);
     });
