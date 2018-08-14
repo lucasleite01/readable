@@ -1,6 +1,5 @@
 const config = require('./config');
 const api = `http://localhost:${config.port}`;
-
 // Generate a unique token
 export let token = localStorage.token
 if (!token)
@@ -22,10 +21,25 @@ export const getPosts = () =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
-export const incrementVote = (post, option) =>
+export const changeVote = (post, option) =>
   fetch(`${api}/posts/${post.id}`, {
     method: 'POST',
     headers,
     body: JSON.stringify({option: `${option}`})
+  })
+    .then(res => res.json())
+
+export const deletePost = (post) =>
+  fetch(`${api}/posts/${post.id}`, {
+    method: 'DELETE',
+    headers
+  })
+    .then(res => res.json())
+
+export const editPost = (post) =>
+  fetch(`${api}/posts/${post.id}`, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify({post})
   })
     .then(res => res.json())

@@ -116,7 +116,7 @@ function edit (token, id, post) {
         for (prop in post) {
             posts[id][prop] = post[prop]
         }
-        res(posts[id])
+        res(posts[id].post) //changed from posts[id] to posts[id].post to work fine.
     })
 }
 

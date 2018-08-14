@@ -1,6 +1,8 @@
 import {
   VOTE_UP,
-  VOTE_DOWN
+  VOTE_DOWN,
+  DELETE_POST,
+  EDIT_POST
 } from '../actions';
 
 const defaultData = {
@@ -29,13 +31,39 @@ const defaultData = {
 }
 
 function post(state = defaultData, action) {
+  console.log(action);
   switch (action.type) {
-    case VOTE_UP || VOTE_DOWN:
+    case VOTE_UP:
       return {
         ...state,
         [action.id]: {
           ...state[action.id],
           voteScore: action.voteScore
+        }
+      };
+    case VOTE_DOWN:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          voteScore: action.voteScore
+        }
+      };
+    case DELETE_POST:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          deleted: action.deleted
+        }
+      };
+    case EDIT_POST:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          title: action.title,
+          body: action.body
         }
       };
     default:

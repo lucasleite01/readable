@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Container, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
 import PostList from './components/PostList.js'
 // import { connect } from 'react-redux';
 
@@ -11,7 +12,8 @@ class App extends Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      orderBy: 'default', //'default', 'vote', 'date', comment
     };
   }
 
@@ -35,11 +37,31 @@ class App extends Component {
               <NavItem>
                 <NavLink href="/">GitHub</NavLink>
               </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Order by
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem onClick={() => this.setState({orderBy: 'comment'})}>
+                    Comment
+                  </DropdownItem>
+                  <DropdownItem onClick={() => this.setState({orderBy: 'date'})}>
+                    Date
+                  </DropdownItem>
+                  <DropdownItem onClick={() => this.setState({orderBy: 'vote'})}>
+                    Vote
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem onClick={() => this.setState({orderBy: 'default'})}>
+                    Reset
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
             </Nav>
           </Collapse>
         </Navbar>
         <h3>Posts</h3>
-        <PostList>
+        <PostList orderBy={this.state.orderBy}>
         </PostList>
       </Container>
     );
@@ -47,4 +69,4 @@ class App extends Component {
 }
 
 export default App;
-// export default connect()(App);
+//export default connect()(App);
