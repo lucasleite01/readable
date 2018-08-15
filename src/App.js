@@ -5,7 +5,7 @@ import { DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from
 import PostList from './components/PostList.js';
 import AddPost from './components/AddPost.js';
 import AddComment from './components/AddComment.js';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 // import { connect } from 'react-redux';
 
 class App extends Component {
@@ -40,7 +40,7 @@ class App extends Component {
                   <Link className="nav-link" to="/">Posts</Link>
                 </NavItem>
                 <NavItem>
-                  <Link className="nav-link" to="/post/new">Add Post</Link>
+                  <Link className="nav-link" to="/add-post">Add Post</Link>
                 </NavItem>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
@@ -65,40 +65,44 @@ class App extends Component {
               </Nav>
             </Collapse>
           </Navbar>
-          <Route exact path="/" render= {() => (
-            <PostList
-              orderBy={this.state.orderBy}
-              detailPostPage={false}>
-            </PostList>
-          )} />
-          <Route exact path="/:category" render= {() => (
-            <PostList
-              orderBy={this.state.orderBy}
-              detailPostPage={false}>
-            </PostList>
-          )} />
-          <Route exact path="/:category/:post_id" render= {() => (
-            <PostList
-              orderBy={this.state.orderBy}
-              detailPostPage={true}>
-            </PostList>
-          )} />
-          <Route exact path="/post/new" component={AddPost} />
-          <Route exact path="/:category/:post_id/newcomment" render= {() => (
-            <AddComment/>
-          )} />
+          <Switch>
+            <Route exact path="/" render= {() => (
+              <PostList
+                orderBy={this.state.orderBy}
+                detailPostPage={false}>
+              </PostList>
+            )} />
+            <Route exact path="/add-post" component={AddPost} />
+            <Route exact path="/:category([a-zA-Z]+)" render= {() => (
+              <PostList
+                orderBy={this.state.orderBy}
+                detailPostPage={false}>
+              </PostList>
+            )} />
+            <Route exact path="/:category([a-zA-Z]+)/:post_id" render= {() => (
+              <PostList
+                orderBy={this.state.orderBy}
+                detailPostPage={true}>
+              </PostList>
+            )} />
+            <Route exact path="/:category/:post_id/add-comment" render= {() => (
+              <AddComment/>
+            )} />
+            <Route component={NoMatch} />
+          </Switch>
         </Container>
       </Router>
     );
   }
 }
 
-// const Category = ({ match }) => (
-//   <PostList
-//     orderBy={this.state.orderBy}
-//     path={match.params.id}>
-//   </PostList>
-// );
+const NoMatch = ({ location }) => (
+  <div>
+    <h3>
+      Error 404 for <code>{location.pathname}</code>
+    </h3>
+  </div>
+);
 
 export default App;
 //export default connect()(App);

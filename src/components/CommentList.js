@@ -40,7 +40,7 @@ class CommentList extends Component {
   //
   // Todos os comentários de uma postagem são exibidos abaixo do corpo de texto da postagem. DONE
   //
-  // Um mecanismo para a adição de novos comentários está visível na página de detalhes e funciona.
+  // Um mecanismo para a adição de novos comentários está visível na página de detalhes e funciona. DONE
 
   render() {
     // console.log(this.props);

@@ -105,7 +105,7 @@ class PostContent extends Component {
   render() {
     const { post, showBodyComments } = this.props;
     let postDetailPage = `/${post.category}/${post.id}`;
-    let newCommentPage = `${this.props.match.url}/newcomment`;
+    let newCommentPage = `${this.props.match.url}/add-comment`;
     // console.log(this.props);
     return (
       <div>

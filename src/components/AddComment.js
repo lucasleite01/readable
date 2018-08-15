@@ -80,6 +80,7 @@ class AddComment extends Component {
   render() {
     // console.log(uuidv4());
     // console.log(this.props);
+    const { history } = this.props;
     return (
       <div>
         <h3>New Comment</h3>
@@ -100,6 +101,7 @@ class AddComment extends Component {
           </FormGroup>
         </Form>
         <Button color="primary" onClick={this.createComment}>Create comment</Button>
+        <Button color="secondary" onClick={history.goBack}>Back</Button>
       </div>
     );
   }

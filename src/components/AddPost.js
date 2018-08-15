@@ -5,6 +5,7 @@ import * as ReadableAPI from '../api-server/ReadableAPI';
 // import PostContent from './PostContent.js';
 import { connect } from 'react-redux';
 import { addPost } from '../actions';
+import { withRouter } from 'react-router';
 
 const uuidv4 = require('uuid/v4');
 
@@ -101,6 +102,7 @@ class AddPost extends Component {
   }
 
   render() {
+    const { history } = this.props;
     // console.log(uuidv4());
     // console.log(this.state);
     return (
@@ -142,6 +144,7 @@ class AddPost extends Component {
           </FormGroup>
         </Form>
         <Button color="primary" onClick={this.createPost}>Create post</Button>
+        <Button color="secondary" onClick={history.goBack}>Back</Button>
       </div>
     );
   }
@@ -153,4 +156,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(AddPost);
+export default withRouter(connect(null, mapDispatchToProps)(AddPost));
