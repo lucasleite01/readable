@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ListGroup, Badge } from 'reactstrap';
-import * as PostsAPI from '../api-server/PostsAPI';
+import * as ReadableAPI from '../api-server/ReadableAPI';
 import PostContent from './PostContent.js';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -16,7 +16,7 @@ class PostList extends Component {
   }
 
   componentDidMount() {
-    PostsAPI.getCategories().then((data) => {
+    ReadableAPI.getCategories().then((data) => {
       this.setState({
         categories: data,
       });
@@ -36,7 +36,7 @@ class PostList extends Component {
   //
   // O mecanismo de votos funciona e exibe corretamente a nova pontuação dos votos após um clique. DONE
   //
-  // As postagens em lista possuem um link que levam à página de detalhes daquela postagem.
+  // As postagens em lista possuem um link que levam à página de detalhes daquela postagem. DONE
   //
   // Todas as postagens estão listadas na raíz (/). DONE
   //
@@ -47,30 +47,45 @@ class PostList extends Component {
   // As páginas de lista de postagens incluem um botão para adicionar um novo post. DONE
   //
   // Todas as categorias disponíveis são visíveis em qualquer página de lista de postagens. DONE
+
   render() {
     // const { postList } = this.props;
-    const { postList } = this.props;
+    const { postList, detailPostPage } = this.props;
+    const { categories } = this.state;
+
+    let newCategories = categories.map((category) => {
+      return {
+        name: category.name,
+        path: `/${category.path}`
+      };
+    });
+    // console.log(newCategories);
+    // console.log("this.state", this.state);
     // console.log('Props', this.props);
     // console.log("match", this.props.match.params);
     return (
       <div>
         <div>Categories:
           {
-            this.state.categories.map((category) => (
+            newCategories.map((category) => (
               <Link to={category.path} key={category.name}>
                 <Badge color="warning">{category.name}</Badge>
               </Link>
             ))
           }
         </div>
-        <h3>Posts</h3>
+        {detailPostPage ?
+          <h3>Post Details</h3>
+          :
+          <h3>Posts</h3>
+        }
           <ListGroup>
           {
             postList.map(post => (
               <PostContent
               key={post.id}
               post={post}
-              showBody={true}>
+              showBodyComments={detailPostPage}>
               </PostContent>
             ))
           }
@@ -80,36 +95,36 @@ class PostList extends Component {
   }
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps({post, comment}, props) {
   const { orderBy, match } = props;
-  let newState = [];
+  let newPostList = [];
 
-  // console.log(state);
-  if (state !== null && state !== undefined) {
-    Object.keys(state).forEach((key) => {
-      newState.push(state[key]);
+  // console.log(post);
+  if (post !== null && post !== undefined) {
+    Object.keys(post).forEach((key) => {
+      newPostList.push(post[key]);
     });
 
     /*REMOVING DELETED POSTS FROM VIEW*/
-    newState = newState.filter((post) => post.deleted !== true);
+    newPostList = newPostList.filter((post) => post.deleted !== true);
 
     /*FILTER BY CATEGORY*/
     if (match.params.category !== null && match.params.category !== undefined) {
-      newState = newState.filter((post) => post.category === match.params.category);
+      newPostList = newPostList.filter((post) => post.category === match.params.category);
     }
 
     /*ORDERING POSTS*/
     if (orderBy === 'vote') { //order posts by score
-      newState.sort((a, b) => {return b.voteScore - a.voteScore;})
+      newPostList.sort((a, b) => {return b.voteScore - a.voteScore;})
     } else if (orderBy === 'date') { //order posts by date
-      newState.sort((a, b) => {return b.timestamp - a.timestamp;})
+      newPostList.sort((a, b) => {return b.timestamp - a.timestamp;})
     } else if (orderBy === 'comment') { //order posts by comment
-      newState.sort((a, b) => {return b.commentCount - a.commentCount;})
+      newPostList.sort((a, b) => {return b.commentCount - a.commentCount;})
     }
   }
 
   return {
-    postList: newState
+    postList: newPostList
   }
 }
 

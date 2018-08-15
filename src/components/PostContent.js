@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import { Badge, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Col } from 'reactstrap';
 import { connect } from 'react-redux';
-import { voteUp, voteDown, deletePost, editPost } from '../actions';
-import * as PostsAPI from '../api-server/PostsAPI';
+import { voteUpPost, voteDownPost, deletePost, editPost } from '../actions';
+import * as ReadableAPI from '../api-server/ReadableAPI';
+import { Link } from 'react-router-dom';
+import CommentList from './CommentList.js';
 
 class PostContent extends Component {
 
@@ -35,25 +37,25 @@ class PostContent extends Component {
   }
 
   incrementVote(post) {
-    PostsAPI.changeVote(post, 'upVote').then((data) => {
-      this.props.voteUp(data);
+    ReadableAPI.changeVotePost(post, 'upVote').then((data) => {
+      this.props.voteUpPost(data);
     });
   }
 
   decrementVote(post) {
-    PostsAPI.changeVote(post, 'downVote').then((data) => {
-      this.props.voteDown(data);
+    ReadableAPI.changeVotePost(post, 'downVote').then((data) => {
+      this.props.voteDownPost(data);
     });
   }
 
   removePost(post) {
-    PostsAPI.deletePost(post).then((data) => {
+    ReadableAPI.deletePost(post).then((data) => {
       this.props.deletePost(data);
     });
   }
 
   editPost(post) {
-    PostsAPI.editPost(post).then((data) => {
+    ReadableAPI.editPost(post).then((data) => {
       console.log(data);
       //this.props.editPost(data);
     });
@@ -89,7 +91,7 @@ class PostContent extends Component {
       body: postBody
     }
 
-    PostsAPI.editPost(newPost).then((data) => {
+    ReadableAPI.editPost(newPost).then((data) => {
       this.props.editPost(data);
     });
 
@@ -100,13 +102,16 @@ class PostContent extends Component {
   // }
 
   render() {
-    const { post, showBody } = this.props;
+    const { post, showBodyComments } = this.props;
+    let postDetailPage = `/${post.category}/${post.id}`;
     // console.log(this.props);
     return (
       <div>
         <ListGroupItem>
           <ListGroupItemHeading>
-          {post.title} <Badge color="warning">{post.category}</Badge>
+          <Link to={postDetailPage}>{post.title}
+            <Badge color="warning">{post.category}</Badge>
+          </Link>
           </ListGroupItemHeading>
           <Badge href="#" color="secondary" onClick={() => this.incrementVote(post)}>up</Badge>
           <Badge href="#" color="secondary" onClick={() => this.decrementVote(post)}>down</Badge>
@@ -117,13 +122,23 @@ class PostContent extends Component {
             Author: {post.author} | Comments: {post.commentCount} | Score: {post.voteScore} | Date: {this.returnDate(post.timestamp)}
           </ListGroupItemText>
           <ListGroupItemText>
-          {showBody ?
+          {showBodyComments ?
             post.body
             :
             null
           }
           </ListGroupItemText>
         </ListGroupItem>
+        {showBodyComments ?
+          <div>
+            <hr/>
+            <h4>Comments</h4>
+            <CommentList
+              parentId={post.id} />
+          </div>
+          :
+          null
+        }
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Edit Post</ModalHeader>
             <ModalBody>
@@ -154,8 +169,8 @@ class PostContent extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    voteUp: (data) => dispatch(voteUp(data)),
-    voteDown: (data) => dispatch(voteDown(data)),
+    voteUpPost: (data) => dispatch(voteUpPost(data)),
+    voteDownPost: (data) => dispatch(voteDownPost(data)),
     deletePost: (data) => dispatch(deletePost(data)),
     editPost: (data) => dispatch(editPost(data))
   }

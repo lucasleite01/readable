@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Col, FormFeedback } from 'reactstrap';
-import * as PostsAPI from '../api-server/PostsAPI';
+import * as ReadableAPI from '../api-server/ReadableAPI';
 // import { Row, ListGroup } from 'reactstrap';
 // import PostContent from './PostContent.js';
 import { connect } from 'react-redux';
@@ -76,8 +76,8 @@ class AddPost extends Component {
       author: formAuthor,
       category: formCategory
     }
-    
-    PostsAPI.addPost(newPost).then((data) => {
+
+    ReadableAPI.addPost(newPost).then((data) => {
       this.props.addPost(data);
     });
 
@@ -85,7 +85,7 @@ class AddPost extends Component {
   }
 
   resetFormToInicialState() {
-    PostsAPI.getCategories().then((data) => {
+    ReadableAPI.getCategories().then((data) => {
       this.setState({
         categories: data,
         uuid: uuidv4(),

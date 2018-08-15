@@ -10,18 +10,18 @@ const headers = {
   'Content-type': 'application/json'
 }
 
-//Get all of the categories available for the app
+/*CATEGORIES SECTION*/
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
     .then(data => data.categories)
 
-//Get all of the posts available for the app
+/*POSTS SECTION*/
 export const getPosts = () =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
-export const changeVote = (post, option) =>
+export const changeVotePost = (post, option) =>
   fetch(`${api}/posts/${post.id}`, {
     method: 'POST',
     headers,
@@ -49,5 +49,19 @@ export const addPost = (post) =>
     method: 'POST',
     headers,
     body: JSON.stringify(post)
+  })
+    .then(res => res.json())
+
+export const getAllCommentsPost = (postId) =>
+  fetch(`${api}/posts/${postId}/comments`, { headers })
+    .then(res => res.json())
+
+/*COMMENTS SECTION*/
+
+export const changeVoteComment = (comment, option) =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({option: `${option}`})
   })
     .then(res => res.json())

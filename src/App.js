@@ -65,11 +65,21 @@ class App extends Component {
             </Collapse>
           </Navbar>
           <Route exact path="/" render= {() => (
-            <PostList orderBy={this.state.orderBy}>
+            <PostList
+              orderBy={this.state.orderBy}
+              detailPostPage={false}>
             </PostList>
           )} />
           <Route exact path="/:category" render= {() => (
-            <PostList orderBy={this.state.orderBy}>
+            <PostList
+              orderBy={this.state.orderBy}
+              detailPostPage={false}>
+            </PostList>
+          )} />
+          <Route exact path="/:category/:post_id" render= {() => (
+            <PostList
+              orderBy={this.state.orderBy}
+              detailPostPage={true}>
             </PostList>
           )} />
           <Route exact path="/post/new" component={AddPost} />
