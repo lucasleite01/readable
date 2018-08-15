@@ -148,7 +148,7 @@ function comment(state = defaultCommentData, action) {
         ...state,
         [action.id]: {
           ...state[action.id],
-          title: action.title,
+          timestamp: action.timestamp,
           body: action.body
         }
       };

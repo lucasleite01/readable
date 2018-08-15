@@ -65,3 +65,18 @@ export const changeVoteComment = (comment, option) =>
     body: JSON.stringify({option: `${option}`})
   })
     .then(res => res.json())
+
+export const deleteComment = (comment) =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: 'DELETE',
+    headers
+  })
+    .then(res => res.json())
+
+export const editComment = (comment) =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(comment)
+  })
+    .then(res => res.json())

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Badge, ListGroup } from 'reactstrap';
+import { ListGroup } from 'reactstrap';
 import CommentContent from './CommentContent.js';
 // import * as ReadableAPI from '../api-server/ReadableAPI';
 import { connect } from 'react-redux';
@@ -36,9 +36,9 @@ class CommentList extends Component {
   // 2) Pontuação atual DONE
   // 3) Mecanismo de voto para votar positiva ou negativamente o comentário DONE
   //
-  // O mecanismo de voto funciona e exibe corretamente a nova pontuação de votos ao clicar para votar na postagem e nos comentários.
+  // O mecanismo de voto funciona e exibe corretamente a nova pontuação de votos ao clicar para votar na postagem e nos comentários. DONE
   //
-  // Todos os comentários de uma postagem são exibidos abaixo do corpo de texto da postagem.
+  // Todos os comentários de uma postagem são exibidos abaixo do corpo de texto da postagem. DONE
   //
   // Um mecanismo para a adição de novos comentários está visível na página de detalhes e funciona.
 
@@ -69,6 +69,9 @@ function mapStateToProps({post, comment}, props) {
       newCommentList.push(comment[key]);
     });
   }
+
+  /*REMOVING DELETED COMMENTS FROM VIEW*/
+  newCommentList = newCommentList.filter((cmt) => cmt.deleted !== true);
 
   return {
     commentList: newCommentList

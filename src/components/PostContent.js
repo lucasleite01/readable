@@ -83,10 +83,9 @@ class PostContent extends Component {
 
   updatePost() {
     const { postTitle, postBody} = this.state
-    const { post } = this.props;
 
     let newPost = {
-      ...post,
+      id: this.props.post.id,
       title: postTitle,
       body: postBody
     }
