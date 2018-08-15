@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Container, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
+import { Container, Collapse, Navbar, NavbarToggler, Nav, NavItem } from 'reactstrap';
 import { DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
 import PostList from './components/PostList.js';
 import AddPost from './components/AddPost.js';
