@@ -13,7 +13,7 @@ class PostContent extends Component {
       showBody: false,
       modal: false,
       postTitle: '',
-      postBody: ''
+      postBody: '',
     };
     this.incrementVote = this.incrementVote.bind(this);
     this.decrementVote = this.decrementVote.bind(this);

@@ -1,24 +1,27 @@
 import React, { Component } from 'react';
-import { ListGroup } from 'reactstrap';
-// import * as PostsAPI from '../api-server/PostsAPI';
+import { ListGroup, Badge } from 'reactstrap';
+import * as PostsAPI from '../api-server/PostsAPI';
 import PostContent from './PostContent.js';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 
 class PostList extends Component {
 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     postList: []
-  //   };
-  // }
-  //
-  // componentDidMount() {
-  //   PostsAPI.getPosts().then((data) => {
-  //     this.setState({postList: data});
-  //   });
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      categories: []
+    };
+  }
+
+  componentDidMount() {
+    PostsAPI.getCategories().then((data) => {
+      this.setState({
+        categories: data,
+      });
+    });
+  }
 
   // TODO:
   // Postagens listadas são exibidas com os seguintes itens:
@@ -43,7 +46,7 @@ class PostList extends Component {
   //
   // As páginas de lista de postagens incluem um botão para adicionar um novo post. DONE
   //
-  // Todas as categorias disponíveis são visíveis em qualquer página de lista de postagens.
+  // Todas as categorias disponíveis são visíveis em qualquer página de lista de postagens. DONE
   render() {
     // const { postList } = this.props;
     const { postList } = this.props;
@@ -51,6 +54,15 @@ class PostList extends Component {
     // console.log("match", this.props.match.params);
     return (
       <div>
+        <div>Categories:
+          {
+            this.state.categories.map((category) => (
+              <Link to={category.path} key={category.name}>
+                <Badge color="warning">{category.name}</Badge>
+              </Link>
+            ))
+          }
+        </div>
         <h3>Posts</h3>
           <ListGroup>
           {
