@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../utils/App.css';
 import { Container, Collapse, Navbar, NavbarToggler, Nav, NavItem } from 'reactstrap';
 import { DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
-import PostList from './components/PostList.js';
-import AddPost from './components/AddPost.js';
-import AddComment from './components/AddComment.js';
+import PostList from './PostList.js';
+import AddPost from './AddPost.js';
+import AddComment from './AddComment.js';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 // import { connect } from 'react-redux';
 
