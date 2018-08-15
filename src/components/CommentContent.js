@@ -76,7 +76,7 @@ class CommentContent extends Component {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const { comment } = this.props;
     return (
       <div>

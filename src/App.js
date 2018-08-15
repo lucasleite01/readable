@@ -4,6 +4,7 @@ import { Container, Collapse, Navbar, NavbarToggler, Nav, NavItem } from 'reacts
 import { DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
 import PostList from './components/PostList.js';
 import AddPost from './components/AddPost.js';
+import AddComment from './components/AddComment.js';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 // import { connect } from 'react-redux';
 
@@ -83,6 +84,9 @@ class App extends Component {
             </PostList>
           )} />
           <Route exact path="/post/new" component={AddPost} />
+          <Route exact path="/:category/:post_id/newcomment" render= {() => (
+            <AddComment/>
+          )} />
         </Container>
       </Router>
     );

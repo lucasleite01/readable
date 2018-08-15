@@ -6,6 +6,8 @@ import { voteUpPost, voteDownPost, deletePost, editPost } from '../actions';
 import * as ReadableAPI from '../api-server/ReadableAPI';
 import { Link } from 'react-router-dom';
 import CommentList from './CommentList.js';
+// import AddComment from './AddComment.js';
+import { withRouter } from 'react-router';
 
 class PostContent extends Component {
 
@@ -56,8 +58,8 @@ class PostContent extends Component {
 
   editPost(post) {
     ReadableAPI.editPost(post).then((data) => {
-      console.log(data);
-      //this.props.editPost(data);
+      // console.log(data);
+      this.props.editPost(data);
     });
   }
 
@@ -103,6 +105,7 @@ class PostContent extends Component {
   render() {
     const { post, showBodyComments } = this.props;
     let postDetailPage = `/${post.category}/${post.id}`;
+    let newCommentPage = `${this.props.match.url}/newcomment`;
     // console.log(this.props);
     return (
       <div>
@@ -131,6 +134,9 @@ class PostContent extends Component {
         {showBodyComments ?
           <div>
             <hr/>
+            <Link to={newCommentPage}>
+              <Button color="primary">Add comment</Button>
+            </Link>
             <h4>Comments</h4>
             <CommentList
               parentId={post.id} />
@@ -175,4 +181,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(PostContent);
+export default withRouter(connect(null, mapDispatchToProps)(PostContent));
