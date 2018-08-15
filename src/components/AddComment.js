@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Col, FormFeedback } from 'reactstrap';
 import * as ReadableAPI from '../api-server/ReadableAPI';
-// import { Row, ListGroup } from 'reactstrap';
-// import PostContent from './PostContent.js';
 import { connect } from 'react-redux';
 import { addComment } from '../actions';
 import { withRouter } from 'react-router';
@@ -78,8 +76,6 @@ class AddComment extends Component {
   }
 
   render() {
-    // console.log(uuidv4());
-    // console.log(this.props);
     const { history } = this.props;
     return (
       <div>

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
 import { Badge, ListGroupItem, ListGroupItemHeading, ListGroupItemText, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { voteUpPost, voteDownPost, deletePost, editPost } from '../actions';
 import * as ReadableAPI from '../api-server/ReadableAPI';
 import { Link } from 'react-router-dom';
 import CommentList from './CommentList.js';
-// import AddComment from './AddComment.js';
 import { withRouter } from 'react-router';
 
 class PostContent extends Component {
@@ -58,7 +56,6 @@ class PostContent extends Component {
 
   editPost(post) {
     ReadableAPI.editPost(post).then((data) => {
-      // console.log(data);
       this.props.editPost(data);
     });
   }
@@ -98,15 +95,12 @@ class PostContent extends Component {
 
     this.toggle();
   }
-  // static propTypes = {
-  //   post: PropTypes.Object.isRequired
-  // }
 
   render() {
     const { post, showBodyComments } = this.props;
     let postDetailPage = `/${post.category}/${post.id}`;
     let newCommentPage = `${this.props.match.url}/add-comment`;
-    // console.log(this.props);
+
     return (
       <div>
         <ListGroupItem>

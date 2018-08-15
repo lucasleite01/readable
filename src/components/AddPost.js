@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Col, FormFeedback } from 'reactstrap';
 import * as ReadableAPI from '../api-server/ReadableAPI';
-// import { Row, ListGroup } from 'reactstrap';
-// import PostContent from './PostContent.js';
 import { connect } from 'react-redux';
 import { addPost } from '../actions';
 import { withRouter } from 'react-router';
@@ -103,8 +101,6 @@ class AddPost extends Component {
 
   render() {
     const { history } = this.props;
-    // console.log(uuidv4());
-    // console.log(this.state);
     return (
       <div>
         <h3>New Post</h3>

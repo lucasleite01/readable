@@ -6,7 +6,6 @@ import PostList from './PostList.js';
 import AddPost from './AddPost.js';
 import AddComment from './AddComment.js';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
-// import { connect } from 'react-redux';
 
 class App extends Component {
 
@@ -27,7 +26,6 @@ class App extends Component {
   }
 
   render() {
-    // console.log(this.props);
     return (
       <Router>
         <Container>
@@ -105,4 +103,3 @@ const NoMatch = ({ location }) => (
 );
 
 export default App;
-//export default connect()(App);
