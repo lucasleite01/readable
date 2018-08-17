@@ -101,6 +101,9 @@ class PostContent extends Component {
     let postDetailPage = `/${post.category}/${post.id}`;
     let newCommentPage = `${this.props.match.url}/add-comment`;
 
+    // ReadableAPI.getAllCommentsPost(post.id).then((data) => {
+    //   console.log("allComentsOnAPI", data);
+    // });
     return (
       <div>
         <ListGroupItem>

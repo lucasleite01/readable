@@ -23,21 +23,18 @@ class CommentContent extends Component {
 
   incrementVote(comment) {
     ReadableAPI.changeVoteComment(comment, 'upVote').then((data) => {
-      console.log("commentUp", data);
       this.props.voteUpComment(data);
     });
   }
 
   decrementVote(comment) {
     ReadableAPI.changeVoteComment(comment, 'downVote').then((data) => {
-      console.log("commentDown", data);
       this.props.voteUpComment(data);
     });
   }
 
   removeComment(post) {
     ReadableAPI.deleteComment(post).then((data) => {
-      console.log(data);
       this.props.deleteComment(data);
     });
   }

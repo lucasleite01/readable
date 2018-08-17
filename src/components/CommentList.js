@@ -29,9 +29,12 @@ function mapStateToProps({post, comment}, props) {
     Object.keys(comment).forEach((key) => {
       newCommentList.push(comment[key]);
     });
+    /*REMOVING _persist*/
+    newCommentList.pop();
   }
 
   /*REMOVING DELETED COMMENTS FROM VIEW*/
+  // console.log("newCommentList", newCommentList);
   newCommentList = newCommentList.filter((cmt) => cmt.deleted !== true);
 
   return {

@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import {
   VOTE_UP_POST,
@@ -171,7 +173,24 @@ function comment(state = defaultCommentData, action) {
   }
 }
 
-export default combineReducers({
-  post,
-  comment
+const rootPersistConfig = {
+  key: 'root-reducer',
+  storage,
+}
+
+const postPersistConfig = {
+  key: 'post-reducer',
+  storage,
+}
+
+const commentPersistConfig = {
+  key: 'comment-reducer',
+  storage,
+}
+
+const rootReducer = combineReducers({
+  post: persistReducer(postPersistConfig, post),
+  comment: persistReducer(commentPersistConfig, comment)
 });
+
+export default persistReducer(rootPersistConfig, rootReducer);

@@ -53,11 +53,20 @@ class PostList extends Component {
           <ListGroup>
           {
             postList.map(post => (
-              <PostContent
-              key={post.id}
-              post={post}
-              showBodyComments={detailPostPage}>
-              </PostContent>
+              post.deleted && detailPostPage ?
+                <div key={post.id}>
+                  <h3>
+                    Error 404 for <code>{this.props.match.params.url}</code>
+                  </h3>
+                </div>
+              : post.deleted && !detailPostPage ?
+                null
+              :
+                <PostContent
+                key={post.id}
+                post={post}
+                showBodyComments={detailPostPage}>
+                </PostContent>
             ))
           }
           </ListGroup>
@@ -74,9 +83,11 @@ function mapStateToProps({post, comment}, props) {
     Object.keys(post).forEach((key) => {
       newPostList.push(post[key]);
     });
+    /*REMOVING _persist*/
+    newPostList.pop();
 
     /*REMOVING DELETED POSTS FROM VIEW*/
-    newPostList = newPostList.filter((post) => post.deleted !== true);
+    // newPostList = newPostList.filter((post) => post.deleted !== true);
 
     /*FILTER BY CATEGORY*/
     if (match.params.category !== null && match.params.category !== undefined) {
