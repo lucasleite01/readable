@@ -80,12 +80,6 @@ class AddComment extends Component {
           // console.log("newComment", newComment);
           let post = data.filter((post) => post.id === newComment.parentId);
           // console.log("post", post);
-          let newPost = {
-            id: post.id,
-            title: post.title,
-            body: post.body,
-            commentCount: post.commentCount
-          }
 
           ReadableAPI.editPost(post[0]).then((data) => {
             // console.log("editPost", data);

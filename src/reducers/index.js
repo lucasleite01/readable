@@ -114,6 +114,14 @@ function post(state = defaultPostData, action) {
           commentCount: action.commentCount
         }
       };
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        [action.parentId]: {
+          ...state[action.parentId],
+          commentCount: state[action.parentId].commentCount - 1
+        }
+      };
     default:
       return state;
   }

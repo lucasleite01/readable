@@ -26,7 +26,6 @@ class PostList extends Component {
   render() {
     const { postList, detailPostPage } = this.props;
     const { categories } = this.state;
-    // console.log(this.props);
     let newCategories = categories.map((category) => {
       return {
         name: category.name,
@@ -56,7 +55,7 @@ class PostList extends Component {
               post.deleted && detailPostPage ?
                 <div key={post.id}>
                   <h3>
-                    Error 404 for <code>{this.props.match.params.url}</code>
+                    Error 404 for <code>{this.props.match.url}</code>
                   </h3>
                 </div>
               : post.deleted && !detailPostPage ?
