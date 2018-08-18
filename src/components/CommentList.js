@@ -22,7 +22,7 @@ class CommentList extends Component {
   }
 }
 
-function mapStateToProps({post, comment}, props) {
+function mapStateToProps({post, comment, category}, props) {
   let newCommentList = [];
 
   if (comment !== null && comment !== undefined) {

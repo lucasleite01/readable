@@ -5,6 +5,7 @@ import { DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from
 import PostList from './PostList.js';
 import AddPost from './AddPost.js';
 import AddComment from './AddComment.js';
+import AddCategory from './AddCategory.js';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 
 class App extends Component {
@@ -40,6 +41,9 @@ class App extends Component {
                 <NavItem>
                   <Link className="nav-link" to="/add-post">Add Post</Link>
                 </NavItem>
+                <NavItem>
+                  <Link className="nav-link" to="/add-category">Add Category</Link>
+                </NavItem>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Order by
@@ -71,6 +75,7 @@ class App extends Component {
               </PostList>
             )} />
             <Route exact path="/add-post" component={AddPost} />
+            <Route exact path="/add-category" component={AddCategory} />
             <Route exact path="/:category([a-zA-Z]+)" render= {() => (
               <PostList
                 orderBy={this.state.orderBy}

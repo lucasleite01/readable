@@ -16,6 +16,15 @@ export const getCategories = () =>
     .then(res => res.json())
     .then(data => data.categories)
 
+/*new functionality to add a category*/
+export const addCategory = (category) =>
+  fetch(`${api}/categories/${category.name}`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(category)
+  })
+    .then(res => res.json())
+
 /*POSTS SECTION*/
 export const getPosts = () =>
   fetch(`${api}/posts`, { headers })

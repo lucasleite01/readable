@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ListGroup, Badge } from 'reactstrap';
-import * as ReadableAPI from '../api-server/ReadableAPI';
 import PostContent from './PostContent.js';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -8,25 +7,10 @@ import { Link } from 'react-router-dom';
 
 class PostList extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      categories: []
-    };
-  }
-
-  componentDidMount() {
-    ReadableAPI.getCategories().then((data) => {
-      this.setState({
-        categories: data,
-      });
-    });
-  }
-
   render() {
-    const { postList, detailPostPage } = this.props;
-    const { categories } = this.state;
-    let newCategories = categories.map((category) => {
+    const { postList, categoryList, detailPostPage } = this.props;
+
+    let newCategories = categoryList.map((category) => {
       return {
         name: category.name,
         path: `/${category.path}`
@@ -74,9 +58,10 @@ class PostList extends Component {
   }
 }
 
-function mapStateToProps({post, comment}, props) {
+function mapStateToProps({post, comment, category}, props) {
   const { orderBy, match } = props;
   let newPostList = [];
+  let newCategoryList = []
 
   if (post !== null && post !== undefined) {
     Object.keys(post).forEach((key) => {
@@ -108,8 +93,17 @@ function mapStateToProps({post, comment}, props) {
     }
   }
 
+  Object.keys(category).forEach((key) => {
+    newCategoryList.push(category[key]);
+  });
+  /*REMOVING _persist*/
+  newCategoryList.pop();
+
+  // console.log(newCategoryList);
+
   return {
-    postList: newPostList
+    postList: newPostList,
+    categoryList: newCategoryList
   }
 }
 

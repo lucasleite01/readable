@@ -23,4 +23,8 @@ Information about the API server and how to use it can be found in its [README f
 
 ## Redux-persist
 
-The project is working with redux-persist to persist the redux state on `localStorage`. When the server is restarted the initial configuration is set to redux state, but the `localStorage` remains the same. To refresh `localStorage` when you reset the server, type `localStorage.clear()` on DevTools console. It shouldn't be necessary if you don't restart the server. 
+The project is working with redux-persist to persist the redux state on `localStorage`. When the server is restarted the initial configuration is set to redux state, but the `localStorage` remains the same. To refresh `localStorage` when you reset the server, type `localStorage.clear()` on DevTools console. It shouldn't be necessary if you don't restart the server.
+
+## New functionalities
+
+- The user can now add categories that will be displayed on all pages of the project and also can be used to create posts. Changes were made on `src/api-server/server.js` and `src/api-server/categories.js` for making this work.

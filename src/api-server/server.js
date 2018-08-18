@@ -141,6 +141,20 @@ app.get('/categories', (req, res) => {
       )
 })
 
+/*new functionality to add a category*/
+app.post('/categories/:name', bodyParser.json(), (req, res) => {
+    categories.add(req.token, req.body)
+      .then(
+        (data) => res.send(data),
+          (error) => {
+              console.error(error)
+              res.status(500).send({
+                  error: 'There was an error.'
+              })
+          }
+      )
+})
+
 app.get('/:category/posts', (req, res) => {
     posts.getByCategory(req.token, req.params.category)
       .then(

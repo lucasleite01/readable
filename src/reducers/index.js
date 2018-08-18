@@ -12,7 +12,8 @@ import {
   ADD_POST,
   DELETE_COMMENT,
   EDIT_COMMENT,
-  ADD_COMMENT
+  ADD_COMMENT,
+  ADD_CATEGORY
 } from '../actions';
 
 const defaultPostData = {
@@ -60,6 +61,21 @@ const defaultCommentData = {
     voteScore: -5,
     deleted: false,
     parentDeleted: false
+  }
+}
+
+const defaultCategoryData = {
+  "react": {
+    name: 'react',
+    path: 'react'
+  },
+  "redux": {
+    name: 'redux',
+    path: 'redux'
+  },
+  "udacity": {
+    name: 'udacity',
+    path: 'udacity'
   }
 }
 
@@ -182,6 +198,22 @@ function comment(state = defaultCommentData, action) {
   }
 }
 
+function category(state = defaultCategoryData, action) {
+  switch (action.type) {
+    case ADD_CATEGORY:
+      return {
+        ...state,
+        [action.name]: {
+          ...state[action.name],
+          name: action.name,
+          path: action.path
+        }
+      }
+    default:
+      return state;
+  }
+}
+
 const rootPersistConfig = {
   key: 'root-reducer',
   storage,
@@ -197,9 +229,15 @@ const commentPersistConfig = {
   storage,
 }
 
+const categoryPersistConfig = {
+  key: 'category-reducer',
+  storage,
+}
+
 const rootReducer = combineReducers({
   post: persistReducer(postPersistConfig, post),
-  comment: persistReducer(commentPersistConfig, comment)
+  comment: persistReducer(commentPersistConfig, comment),
+  category: persistReducer(categoryPersistConfig, category),
 });
 
 export default persistReducer(rootPersistConfig, rootReducer);

@@ -8,6 +8,13 @@ export const VOTE_UP_POST = 'VOTE_UP_POST';
 export const VOTE_DOWN_POST = 'VOTE_DOWN_POST';
 export const VOTE_UP_COMMENT = 'VOTE_UP_COMMENT';
 export const VOTE_DOWN_COMMENT = 'VOTE_DOWN_COMMENT';
+export const ADD_CATEGORY = 'ADD_CATEGORY';
+
+export function addCategory(post) {
+  return {
+    type: ADD_CATEGORY, ...post
+  }
+}
 
 export function addPost(post) {
   return {

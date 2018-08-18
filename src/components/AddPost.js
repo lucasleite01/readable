@@ -108,20 +108,18 @@ class AddPost extends Component {
   }
 
   resetFormToInicialState() {
-    ReadableAPI.getCategories().then((data) => {
-      this.setState({
-        categories: data,
-        uuid: uuidv4(),
-        formTitle: '',
-        formBody: '',
-        formAuthor: '',
-        formCategory: data[0].name,
-        titleFilled: true,
-        bodyFilled: true,
-        authorFilled: true,
-        nextPage: null,
-        redirect: false
-      });
+    this.setState({
+      categories: this.props.categoryList,
+      uuid: uuidv4(),
+      formTitle: '',
+      formBody: '',
+      formAuthor: '',
+      formCategory: this.props.categoryList[0].name,
+      titleFilled: true,
+      bodyFilled: true,
+      authorFilled: true,
+      nextPage: null,
+      redirect: false
     });
   }
 
@@ -166,7 +164,7 @@ class AddPost extends Component {
             <Col sm={10}>
               <Input type="select" value={this.state.formCategory} onChange={this.handleCategoryChange}>
               {
-                this.state.categories.map((category) => (
+                this.props.categoryList.map((category) => (
                   <option key={category.name} value={category.name}>{category.name}</option>
                 ))
               }
@@ -183,10 +181,24 @@ class AddPost extends Component {
   }
 }
 
+function mapStateToProps({post, comment, category}, props) {
+  let newCategoryList = []
+
+  Object.keys(category).forEach((key) => {
+    newCategoryList.push(category[key]);
+  });
+  /*REMOVING _persist*/
+  newCategoryList.pop();
+
+  return {
+    categoryList: newCategoryList
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     addPost: (data) => dispatch(addPost(data))
   }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(AddPost));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddPost));

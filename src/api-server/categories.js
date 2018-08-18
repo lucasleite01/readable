@@ -36,6 +36,19 @@ function getAll (token) {
   })
 }
 
+/*new functionality to add a category*/
+function add (token, category) {
+  return new Promise((res) => {
+    let categories = getData(token)
+    categories[category.name] = {
+      name: category.name,
+      path: category.path
+    }
+    res(categories[category.name])
+  })
+}
+
 module.exports = {
-  getAll
+  getAll,
+  add
 }
