@@ -26,7 +26,7 @@ class PostList extends Component {
   render() {
     const { postList, detailPostPage } = this.props;
     const { categories } = this.state;
-
+    console.log(this.props);
     let newCategories = categories.map((category) => {
       return {
         name: category.name,
@@ -92,6 +92,11 @@ function mapStateToProps({post, comment}, props) {
     /*FILTER BY CATEGORY*/
     if (match.params.category !== null && match.params.category !== undefined) {
       newPostList = newPostList.filter((post) => post.category === match.params.category);
+    }
+
+    /*FILTER BY POST ID*/
+    if (match.params.post_id !== null && match.params.post_id !== undefined) {
+      newPostList = newPostList.filter((post) => post.id === match.params.post_id);
     }
 
     /*ORDERING POSTS*/

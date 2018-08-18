@@ -40,7 +40,7 @@ export const editPost = (post) =>
   fetch(`${api}/posts/${post.id}`, {
     method: 'PUT',
     headers,
-    body: JSON.stringify({post})
+    body: JSON.stringify(post)
   })
     .then(res => res.json())
 

@@ -95,7 +95,8 @@ function post(state = defaultPostData, action) {
         [action.id]: {
           ...state[action.id],
           title: action.title,
-          body: action.body
+          body: action.body,
+          commentCount: action.commentCount
         }
       };
     case ADD_POST:
@@ -119,7 +120,7 @@ function post(state = defaultPostData, action) {
 }
 
 function comment(state = defaultCommentData, action) {
-  // console.log(action);
+  console.log(action);
   switch (action.type) {
     case VOTE_UP_COMMENT:
       return {

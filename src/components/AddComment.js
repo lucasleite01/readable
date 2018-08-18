@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Col, FormFeedback } from 'reactstrap';
 import * as ReadableAPI from '../api-server/ReadableAPI';
 import { connect } from 'react-redux';
-import { addComment } from '../actions';
+import { addComment, editPost } from '../actions';
 import { withRouter } from 'react-router';
 
 const uuidv4 = require('uuid/v4');
@@ -48,19 +48,54 @@ class AddComment extends Component {
 
   createComment() {
     const { uuid, formBody, formAuthor } = this.state;
-    let newComment = {
-      id: uuid,
-      timestamp: Date.now(),
-      body: formBody,
-      author: formAuthor,
-      parentId: this.props.match.url.split("/")[2]
-    }
 
-    ReadableAPI.addComment(newComment).then((data) => {
-      this.props.addComment(data);
-    });
+    if (formBody === '' || formAuthor === '') {
 
-    this.resetFormToInicialState();
+
+      if (formBody === '') {
+        this.setState({
+          bodyFilled: false,
+        });
+      }
+      if (formAuthor === '') {
+        this.setState({
+          authorFilled: false
+        });
+      }
+    } else { //valid form input
+
+      let newComment = {
+        id: uuid,
+        timestamp: Date.now(),
+        body: formBody,
+        author: formAuthor,
+        parentId: this.props.match.url.split("/")[2]
+      }
+
+      ReadableAPI.addComment(newComment).then((data) => {
+        this.props.addComment(data);
+        // console.log("addComment", data);
+
+        ReadableAPI.getPosts().then((data) => {
+          // console.log("newComment", newComment);
+          let post = data.filter((post) => post.id === newComment.parentId);
+          // console.log("post", post);
+          let newPost = {
+            id: post.id,
+            title: post.title,
+            body: post.body,
+            commentCount: post.commentCount
+          }
+
+          ReadableAPI.editPost(post[0]).then((data) => {
+            // console.log("editPost", data);
+            this.props.editPost(data);
+          });
+        });
+      });
+
+      this.resetFormToInicialState();
+    } //end else
   }
 
   resetFormToInicialState() {
@@ -105,7 +140,8 @@ class AddComment extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addComment: (data) => dispatch(addComment(data))
+    addComment: (data) => dispatch(addComment(data)),
+    editPost:(data) => dispatch(editPost(data))
   }
 }
 

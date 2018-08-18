@@ -67,20 +67,41 @@ class AddPost extends Component {
 
   createPost() {
     const { uuid, formTitle, formBody, formAuthor, formCategory } = this.state;
-    let newPost = {
-      id: uuid,
-      timestamp: Date.now(),
-      title: formTitle,
-      body: formBody,
-      author: formAuthor,
-      category: formCategory
+
+    if (formTitle === '' || formBody === '' || formAuthor === ''  ) {
+
+
+      if (formTitle === '') {
+        this.setState({
+          titleFilled: false,
+        });
+      }
+      if (formBody === '') {
+        this.setState({
+          bodyFilled: false
+        });
+      }
+      if (formAuthor === '') {
+        this.setState({
+          authorFilled: false
+        });
+      }
+    } else { //valid form input
+      let newPost = {
+        id: uuid,
+        timestamp: Date.now(),
+        title: formTitle,
+        body: formBody,
+        author: formAuthor,
+        category: formCategory
+      }
+
+      ReadableAPI.addPost(newPost).then((data) => {
+        this.props.addPost(data);
+      });
+
+      this.resetFormToInicialState();
     }
-
-    ReadableAPI.addPost(newPost).then((data) => {
-      this.props.addPost(data);
-    });
-
-    this.resetFormToInicialState();
   }
 
   resetFormToInicialState() {
