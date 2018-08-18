@@ -26,7 +26,7 @@ class PostList extends Component {
   render() {
     const { postList, detailPostPage } = this.props;
     const { categories } = this.state;
-    console.log(this.props);
+    // console.log(this.props);
     let newCategories = categories.map((category) => {
       return {
         name: category.name,

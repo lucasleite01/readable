@@ -21,6 +21,12 @@ class CommentContent extends Component {
     this.returnDate = this.returnDate.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({
+      commentBody: this.props.comment.body
+    });
+  }
+
   incrementVote(comment) {
     ReadableAPI.changeVoteComment(comment, 'upVote').then((data) => {
       this.props.voteUpComment(data);

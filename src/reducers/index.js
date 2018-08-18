@@ -120,7 +120,7 @@ function post(state = defaultPostData, action) {
 }
 
 function comment(state = defaultCommentData, action) {
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
     case VOTE_UP_COMMENT:
       return {
