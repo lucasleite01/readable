@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input, Col, FormFeedback } from 'reacts
 import * as ReadableAPI from '../api-server/ReadableAPI';
 import { connect } from 'react-redux';
 import { addPost } from '../actions';
-import { withRouter } from 'react-router';
+import { withRouter, Redirect } from 'react-router';
 
 const uuidv4 = require('uuid/v4');
 
@@ -20,7 +20,9 @@ class AddPost extends Component {
       formCategory: '',
       titleFilled: true,
       bodyFilled: true,
-      authorFilled: true
+      authorFilled: true,
+      nextPage: null,
+      redirect: false
     };
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
@@ -70,7 +72,6 @@ class AddPost extends Component {
 
     if (formTitle === '' || formBody === '' || formAuthor === ''  ) {
 
-
       if (formTitle === '') {
         this.setState({
           titleFilled: false,
@@ -98,9 +99,11 @@ class AddPost extends Component {
 
       ReadableAPI.addPost(newPost).then((data) => {
         this.props.addPost(data);
+        this.setState({
+          nextPage: `/${formCategory}/${uuid}`,
+          redirect: true
+        })
       });
-
-      this.resetFormToInicialState();
     }
   }
 
@@ -115,7 +118,9 @@ class AddPost extends Component {
         formCategory: data[0].name,
         titleFilled: true,
         bodyFilled: true,
-        authorFilled: true
+        authorFilled: true,
+        nextPage: null,
+        redirect: false
       });
     });
   }
@@ -124,6 +129,15 @@ class AddPost extends Component {
     const { history } = this.props;
     return (
       <div>
+      {this.state.redirect ?
+        <Redirect
+        to={{
+          pathname: this.state.nextPage,
+          state: { from: this.props.location }
+        }}
+        />
+        :
+        <div>
         <h3>New Post</h3>
         <Form>
           <FormGroup row>
@@ -162,6 +176,8 @@ class AddPost extends Component {
         </Form>
         <Button color="primary" onClick={this.createPost}>Create post</Button>
         <Button color="secondary" onClick={history.goBack}>Back</Button>
+        </div>
+      }
       </div>
     );
   }

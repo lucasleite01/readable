@@ -89,6 +89,7 @@ class AddComment extends Component {
       });
 
       this.resetFormToInicialState();
+      this.props.history.goBack();
     } //end else
   }
 
